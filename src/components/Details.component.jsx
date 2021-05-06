@@ -1,19 +1,28 @@
 import styled from "styled-components";
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import db from "../firebase";
 const Detail = (props) => {
+  const { id } = useParams();
+  const [detailData, setDetailData] = useState({});
+  useEffect(() => {
+    db.collection("movies")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setDetailData(doc.data());
+        }
+      })
+      .catch((error) => {});
+  }, [id]);
   return (
     <Container>
       <Background>
-        <img
-          src="https://images.unsplash.com/photo-1593642634367-d91a135587b5?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-          alt=""
-        />
+        <img src={detailData.backgroundImg} alt={detailData.title} />
       </Background>
       <ImageTitle>
-        <img
-          src="https://images.unsplash.com/photo-1568950422056-155bcb71caa2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-          alt=""
-        />
+        <img src={detailData.titleImg} alt={detailData.title} />
       </ImageTitle>
       <ContentMeta>
         <Controls>
@@ -28,7 +37,14 @@ const Detail = (props) => {
           <AddList>
             <span></span>
           </AddList>
+          <GroupWatch>
+            <div>
+              <img src="/images/group-icon.png" alt="" />
+            </div>
+          </GroupWatch>
         </Controls>
+        <Subtitle>{detailData.subTitle}</Subtitle>
+        <Description>{detailData.description}</Description>
       </ContentMeta>
     </Container>
   );
@@ -144,7 +160,7 @@ const AddList = styled.div`
     display: inline-block;
     &:first-child {
       height: 2px;
-      transform: translate(1px, 0px) rotate(0deg);
+      transform: translate(1px, 0px) rotate(90deg);
       width: 16px;
     }
     &:nth-child(2) {
@@ -152,6 +168,45 @@ const AddList = styled.div`
       transform: translateX(-8px) rotate(0deg);
       width: 2px;
     }
+  }
+`;
+
+const GroupWatch = styled.div`
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: white;
+  div {
+    height: 40px;
+    width: 40px;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+    img {
+      width: 100%;
+    }
+  }
+`;
+
+const Subtitle = styled.div`
+  color: rgb(249, 249, 249);
+  font-size: 15px;
+  min-height: 20px;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`;
+
+const Description = styled.div`
+  line-height: 1.4;
+  font-size: 20px;
+  padding: 16px 0px;
+  color: rgb(249, 249, 249);
+  @media (max-width: 768px) {
+    font-size: 14px;
   }
 `;
 export default Detail;
