@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  recommeded: null,
+  recommend: null,
   newDisney: null,
   orginal: null,
   trending: null,
@@ -12,7 +12,7 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     setMovies: (state, action) => {
-      state.recommeded = action.payload.recommeded;
+      state.recommend = action.payload.recommend;
       state.newDisney = action.payload.newDisney;
       state.original = action.payload.original;
       state.trending = action.payload.trending;
@@ -22,7 +22,7 @@ const movieSlice = createSlice({
 
 export const { setMovies } = movieSlice.actions;
 
-export const selectRecommend = (state) => state.movie.recommeded;
+export const selectRecommend = (state) => state.movie.recommend;
 export const selectNewDisney = (state) => state.movie.newDisney;
 export const selectOriginal = (state) => state.movie.original;
 export const selectTrending = (state) => state.movie.trending;

@@ -23,34 +23,34 @@ const Home = () => {
       snapshot.docs.forEach((doc) => {
         switch (doc.data().type) {
           case "recommend":
-            recommends = [...recommends, { id: doc.id, ...doc.data() }];
+            recommends.push({ id: doc.id, ...doc.data() });
             break;
 
           case "new":
-            newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }];
+            newDisneys.push({ id: doc.id, ...doc.data() });
             break;
 
           case "original":
-            originals = [...originals, { id: doc.id, ...doc.data() }];
+            originals.push({ id: doc.id, ...doc.data() });
             break;
 
           case "trending":
-            trending = [...trending, { id: doc.id, ...doc.data() }];
+            trending.push({ id: doc.id, ...doc.data() });
             break;
           default:
-            return 0;
+            break;
         }
       });
-    });
 
-    dispatch(
-      setMovies({
-        recommend: recommends,
-        NewDisney: newDisneys,
-        original: originals,
-        trending: trending,
-      })
-    );
+      dispatch(
+        setMovies({
+          recommend: recommends,
+          newDisney: newDisneys,
+          original: originals,
+          trending: trending,
+        })
+      );
+    });
   }, [userName]);
   return (
     <Container>
