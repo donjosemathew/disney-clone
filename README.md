@@ -1,3 +1,6 @@
+<img src="https://raw.githubusercontent.com/dontech09/disney-clone/main/Screenshot%202021-05-06%20091954.png" alt="Girl in a jacket" width="500" >
+
+# Disney React Clone
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
